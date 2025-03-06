@@ -142,7 +142,7 @@ function App() {
       </div>
       {country && state && city ? (
         <div style={{textAlign:'center', marginTop:'30px'}}> 
-          <b>You selected : {city},</b> {state}, {country}
+          You selected {city}, {state}, {country}
         </div>
       ) : null}
     </div>
