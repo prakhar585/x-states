@@ -15,9 +15,9 @@ function App() {
         const response = await axios.get(
           ` https://crio-location-selector.onrender.com/countries`
         );
-        const normalizedCountries = response.data.map((item) => item.trim());
-        const uniqueCountries = Array.from(new Set(normalizedCountries));
-        setCountryList(uniqueCountries);
+        // const normalizedCountries = response.data.map((item) => item.trim());
+        // const uniqueCountries = Array.from(new Set(normalizedCountries));
+        setCountryList(response.data);
         console.log("response data length>>",response.data.length);
         console.log("country list length>>",countryList.length);
       } catch (error) {
@@ -25,7 +25,7 @@ function App() {
       }
     };
     fetchCountry();
-  }, [country]);
+  }, []);
 
   useEffect(() => {
     // setState("");
