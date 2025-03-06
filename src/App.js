@@ -18,13 +18,14 @@ function App() {
         const normalizedCountries = response.data.map((item) => item.trim());
         const uniqueCountries = Array.from(new Set(normalizedCountries));
         setCountryList(uniqueCountries);
-
+        console.log("response data length>>",response.data.length);
+        console.log("country list length>>",countryList.length);
       } catch (error) {
         console.error("Error fetcing data:", error);
       }
     };
     fetchCountry();
-  }, []);
+  }, [country]);
 
   useEffect(() => {
     // setState("");
