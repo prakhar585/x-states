@@ -16,8 +16,11 @@ function App() {
           ` https://crio-location-selector.onrender.com/countries`
         );
         const normalizedCountries = response.data.map((item) => item.trim());
-        setCountryList(normalizedCountries);
-
+        const uniqueCountries = Array.from(new Set(normalizedCountries));
+        setCountryList(uniqueCountries);
+        
+        console.log("response data length>>",response.data.length);
+        console.log("country list length>>",countryList.length);
       } catch (error) {
         console.error("Error fetcing data:", error);
       }
@@ -26,9 +29,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-  
-    if(!country) return;
+    // setState("");
+    // setCity("");
+    // setCityList([]);
 
+    if (country !== "") {
       const fetchStates = async () => {
         try {
           const response = await axios.get(
@@ -40,17 +45,16 @@ function App() {
         }
       };
       fetchStates();
-    
+    } else {
+      setStateList([]);
+    }
   }, [country]);
 
   //fetch city
   useEffect(() => {
     setCity("");
 
-    if (!country || !state) {
-      setCityList([]);
-      return;
-    }
+    if (country && state && state.trim() !== "" && country.trim() !== "") {
       const fetchCity = async () => {
         try {
           const response = await axios.get(
@@ -62,7 +66,9 @@ function App() {
         }
       };
       fetchCity();
-    
+    }else{
+      setCityList([])
+    }
   }, [state, country]);
 
   return (
@@ -80,10 +86,6 @@ function App() {
           onChange={(e) => {
             const selectedCountry = e.target.value;
             setCountry(selectedCountry);
-            setState("");
-            setCity("");
-            setStateList([]);
-            setCityList([]);
           }}
         >
           <option value="" disabled>
