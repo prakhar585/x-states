@@ -15,8 +15,10 @@ function App() {
         const response = await axios.get(
           ` https://crio-location-selector.onrender.com/countries`
         );
-        setCountryList(response.data);
-        
+        const normalizedCountries = response.data.map((item) => item.trim());
+        const uniqueCountries = Array.from(new Set(normalizedCountries));
+        setCountryList(uniqueCountries);
+
       } catch (error) {
         console.error("Error fetcing data:", error);
       }
@@ -25,9 +27,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setState("");
-    setCity("");
-    setCityList([]);
+    // setState("");
+    // setCity("");
+    // setCityList([]);
 
     if (country !== "") {
       const fetchStates = async () => {
@@ -87,10 +89,13 @@ function App() {
           <option value="" disabled>
             Select Country
           </option>
-          {countryList.map((item) => (
-            <option key={item}>{item}</option>
+          {countryList.map((item, index) => (
+            <option key={`${item}-${index}`}>{item}</option>
           ))}
         </select>
+
+
+
         {/* City */}
         <select
           style={{
@@ -108,10 +113,12 @@ function App() {
           <option value="" disabled>
             Select state
           </option>
-          {stateList.map((item) => (
-            <option key={item}>{item}</option>
+          {stateList.map((item,index) => (
+            <option key={`${item}-${index}`}>{item}</option>
           ))}
         </select>
+
+
         <select
           style={{
             width: "250px",
@@ -128,8 +135,8 @@ function App() {
           <option value="" disabled>
             Select city
           </option>
-          {cityList.map((item) => (
-            <option key={item}>{item}</option>
+          {cityList.map((item, index) => (
+            <option key={`${item}-${index}`}>{item}</option>
           ))}
         </select>
       </div>
